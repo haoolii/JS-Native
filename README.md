@@ -1,4 +1,6 @@
 # Javascript Native Function Implementation
+[![Coverage Status](https://coveralls.io/repos/github/unnhao/JS-Native/badge.svg?branch=master)](https://coveralls.io/github/unnhao/JS-Native?branch=master)
+
 It's use on interview or just practice myself, you can share your implementation, make us become better.
 
 ## Function List

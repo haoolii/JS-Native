@@ -4,7 +4,8 @@
   "description": "It's use on interview or just practice myself, you can share your implementation, make us become better.",
   "main": "native.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "coverage": "jest --coverage --coverageReporters=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   },
   "homepage": "https://github.com/unnhao/JS-Native#readme",
   "devDependencies": {
+    "coveralls": "^3.0.6",
     "jest": "^24.9.0"
   }
 }
