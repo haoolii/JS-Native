@@ -14,6 +14,16 @@ It's use on interview or just practice myself, you can share your implementation
 *   Array.prototype.forEach
 *   Promise
 
+## Usage
+
+`git clone https://github.com/unnhao/JS-Native.git`
+
+`cd JS-Native`
+
+`npm install`
+
+`npm run test`
+
 ## Reference
 [Mozilla](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference)
 

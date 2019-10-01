@@ -1,0 +1,23 @@
+{
+  "name": "native",
+  "version": "1.0.0",
+  "description": "It's use on interview or just practice myself, you can share your implementation, make us become better.",
+  "main": "native.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unnhao/JS-Native.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/unnhao/JS-Native/issues"
+  },
+  "homepage": "https://github.com/unnhao/JS-Native#readme",
+  "devDependencies": {
+    "jest": "^24.9.0"
+  }
+}

@@ -28,7 +28,7 @@ Function.prototype.myOwnApply = function(someOtherThis, arr) {
   if (!arr) {
     result = someOtherThis[uniqueID]()
   } else {
-    for (let i = 1, len = arr.length; i < len; i++) {
+    for (let i = 0, len = arr.length; i < len; i++) {
       args.push('arr[' + i + ']')
     }
     result = eval('someOtherThis[uniqueID](' + args + ')')
@@ -37,9 +37,6 @@ Function.prototype.myOwnApply = function(someOtherThis, arr) {
   delete someOtherThis[uniqueID]
   return result
 }
-const person = {
-  title: 'person'
-}
 
 Function.prototype.myOwnBind = function(newThis) {
   if (typeof this !== 'function') {
@@ -47,7 +44,7 @@ Function.prototype.myOwnBind = function(newThis) {
   }
   var boundTargetFunction = this
   var boundArguments = Array.prototype.slice.call(arguments, 1)
-  return function boundFunction() {
+  return function bound() {
     // here the arguments refer to the second time when we call the target function returned from bind
     var targetArguments = Array.prototype.slice.call(arguments)
     return boundTargetFunction.apply(
@@ -56,5 +53,8 @@ Function.prototype.myOwnBind = function(newThis) {
     )
   }
 }
+
+module.exports = {}
+
 
 // https://blog.usejournal.com/implement-your-own-call-apply-and-bind-method-in-javascript-42cc85dba1b

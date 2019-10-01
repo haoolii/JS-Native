@@ -134,3 +134,8 @@ var passed = [12, 5, 8, 130, 44].mySome(function(element) {
 console.log('some: ' + passed); //some: true
 
 // https://gist.github.com/alexhawkins/28aaf610a3e76d8b8264
+
+
+module.exports = {
+
+}
