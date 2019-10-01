@@ -8,6 +8,7 @@ describe('Test Array.prototype Block', () => {
   var arr5
   var arr6
   var arr7
+  var arr8
 
   beforeEach(() => {
     arr1 = [
@@ -31,6 +32,8 @@ describe('Test Array.prototype Block', () => {
     arr5 = [1, 56, 23, 646, 12, 76, 3]
     arr6 = [30, 70, 64, 98]
     arr7 = [888, 9, 0, 5556, -50, -3, 1]
+    arr8 = ['a', 'b', 'c', 'd']
+    arr9 = ['e', 'f', 'g', 'h']
   })
 
   afterEach(() => {
@@ -38,6 +41,11 @@ describe('Test Array.prototype Block', () => {
     arr2 = null
     arr3 = null
     arr4 = null
+    arr5 = null
+    arr6 = null
+    arr7 = null
+    arr8 = null
+    arr9 = null
   })
 
   test('Array.prototype.forEach', () => {
@@ -77,13 +85,13 @@ describe('Test Array.prototype Block', () => {
   })
 
   test('Array.prototype.every', () => {
-    var _fun1 = function (el) {
+    var _fun1 = function(el) {
       return el >= 10
     }
-    var _fun2 = function (el) {
+    var _fun2 = function(el) {
       return el >= 10
     }
-    var _fun3 = function (el) {
+    var _fun3 = function(el) {
       return el >= 0
     }
     expect(arr5.myOwnEvery(_fun1)).toEqual(arr5.every(_fun1))
@@ -92,17 +100,40 @@ describe('Test Array.prototype Block', () => {
   })
 
   test('Array.prototype.some', () => {
-    var _fun1 = function (el) {
+    var _fun1 = function(el) {
       return el >= 10
     }
-    var _fun2 = function (el) {
+    var _fun2 = function(el) {
       return el >= 10
     }
-    var _fun3 = function (el) {
+    var _fun3 = function(el) {
       return el >= 0
     }
     expect(arr5.myOwnSome(_fun1)).toEqual(arr5.some(_fun1))
     expect(arr6.myOwnSome(_fun2)).toEqual(arr6.some(_fun2))
     expect(arr7.myOwnSome(_fun3)).toEqual(arr7.some(_fun3))
+  })
+
+  test('Array.prototype.some', () => {
+    var _fun1 = function(el) {
+      return el >= 10
+    }
+    var _fun2 = function(el) {
+      return el >= 10
+    }
+    var _fun3 = function(el) {
+      return el >= 0
+    }
+    expect(arr5.myOwnSome(_fun1)).toEqual(arr5.some(_fun1))
+    expect(arr6.myOwnSome(_fun2)).toEqual(arr6.some(_fun2))
+    expect(arr7.myOwnSome(_fun3)).toEqual(arr7.some(_fun3))
+  })
+
+  test('Array.prototype.concat', () => {
+    expect(arr8.myOwnConcat(arr9)).toEqual(arr8.concat(arr9))
+  })
+
+  test('Array.prototype.of', () => {
+    expect([].myOwnOf(1, 2, 3)).toEqual(Array.of(1, 2, 3))
   })
 })

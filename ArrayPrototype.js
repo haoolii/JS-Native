@@ -33,4 +33,18 @@ Array.prototype.myOwnSome = function(cb) {
   return res
 }
 
+Array.prototype.myOwnConcat = function (arr) {
+  var res = []
+  for(var i of this) res.push(i)
+  for(var i of arr) res.push(i)
+  return res
+}
+
+Array.prototype.myOwnOf = function () {
+  var args = arguments
+  var arr = []
+  for (var i of args) arr.push(i)
+  return arr
+}
+
 module.exports = {}
