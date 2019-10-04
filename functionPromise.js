@@ -34,63 +34,60 @@ var myOwnPromise = function(executor) {
 
 myOwnPromise.prototype.then = function(onResolved, onRejected) {
   var self = this
-
-  onResolved =
-    typeof onResolved === 'function' ? onResolved : function(value) {}
-  onRejected =
-    typeof onRejected === 'function' ? onRejected : function(reason) {}
+  var promise2
+  onResolved = typeof onResolved === 'function' ? onResolved : function(v) {
+    return v
+  }
+  onRejected = typeof onRejected === 'function' ? onRejected : function(r) {
+    throw r
+  }
 
   if (self.status === 'resolved') {
-    return new myOwnPromise(function(resolve, reject) {
-      try {
-        var x = onResolved(self.data)
-        if (x instanceof myOwnPromise) {
-          x.then(resolve, reject)
+    return promise2 = new myOwnPromise(function(resolve, reject) {
+      setTimeout(function() {
+        try {
+          var x = onResolved(self.data)
+          resolvePromise(promise2, x, resolve, reject)
+        } catch (reason) {
+          reject(reason)
         }
-        resolve(x)
-      } catch (e) {
-        reject(e)
-      }
+      })
     })
   }
 
   if (self.status === 'rejected') {
-    return (promise2 = new myOwnPromise(function(resolve, reject) {
-      try {
-        var x = onRejected(self.data)
-        if (x instanceof myOwnPromise) {
-          x.then(resolve, reject)
+    return promise2 = new myOwnPromise(function(resolve, reject) {
+      setTimeout(function() {
+        try {
+          var x = onRejected(self.data)
+          resolvePromise(promise2, x, resolve, reject)
+        } catch (reason) {
+          reject(reason)
         }
-      } catch (e) {
-        reject(e)
-      }
-    }))
+      })
+    })
   }
 
   if (self.status === 'pending') {
-    return (promise2 = new Promise(function(resolve, reject) {
+    return promise2 = new myOwnPromise(function(resolve, reject) {
       self.onResolvedCallback.push(function(value) {
         try {
-          var x = onResolved(self.data)
-          if (x instanceof myOwnPromise) {
-            x.then(resolve, reject)
-          }
-        } catch (e) {
-          reject(e)
+          var x = onResolved(value)
+          resolvePromise(promise2, x, resolve, reject)
+        } catch (r) {
+          reject(r)
         }
       })
 
       self.onRejectedCallback.push(function(reason) {
-        try {
-          var x = onRejected(self.data)
-          if (x instanceof myOwnPromise) {
-            x.then(resolve, reject)
+          try {
+            var x = onRejected(reason)
+            resolvePromise(promise2, x, resolve, reject)
+          } catch (r) {
+            reject(r)
           }
-        } catch (e) {
-          reject(e)
-        }
-      })
-    }))
+        })
+    })
   }
 }
 

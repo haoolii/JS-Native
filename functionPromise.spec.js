@@ -50,4 +50,45 @@ describe('Test Promise Function Block', () => {
       expect(arr).toStrictEqual(arr_native)
     })
   })
+
+  test('Promise resolve then chain function', () => {
+    var _fun = function() {
+      return new myOwnPromise((resovle, reject) => {
+        arr.push('1')
+        setTimeout(() => {
+          resovle('2')
+        }, 20)
+      })
+    }
+
+    _fun()
+      .then()
+      .then()
+      .then()
+      .then(n => {
+        arr.push(n)
+        arr.push('3')
+      })
+
+    var _fun_native = function() {
+      return new Promise((resovle, reject) => {
+        arr_native.push('1')
+        setTimeout(() => {
+          resovle('2')
+        }, 20)
+      })
+    }
+    _fun_native()
+      .then()
+      .then()
+      .then()
+      .then(n => {
+        arr_native.push(n)
+        arr_native.push('3')
+      })
+
+    return aysncExcept(500).then(() => {
+      expect(arr).toStrictEqual(arr_native)
+    })
+  })
 })
