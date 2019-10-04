@@ -5,6 +5,7 @@
   "main": "native.js",
   "scripts": {
     "test": "jest",
+    "test-promise": "jest functionPromise.spec.js",
     "coverage": "jest --coverage --coverageReporters=text-lcov | coveralls"
   },
   "repository": {
