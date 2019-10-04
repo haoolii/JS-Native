@@ -32,23 +32,70 @@ var myOwnPromise = function(executor) {
   }
 }
 
-myOwnPromise.prototype.then = function() {
+myOwnPromise.prototype.then = function(onResolved, onRejected) {
   var self = this
 
-  onResolved = typeof onResolved === 'function' ? onResolved : function(v) {}
-  onRejected = typeof onRejected === 'function' ? onRejected : function(r) {}
+  onResolved =
+    typeof onResolved === 'function' ? onResolved : function(value) {}
+  onRejected =
+    typeof onRejected === 'function' ? onRejected : function(reason) {}
 
   if (self.status === 'resolved') {
-    return new myOwnPromise(function(resolve, reject) {})
+    return new myOwnPromise(function(resolve, reject) {
+      try {
+        var x = onResolved(self.data)
+        if (x instanceof myOwnPromise) {
+          x.then(resolve, reject)
+        }
+        resolve(x)
+      } catch (e) {
+        reject(e)
+      }
+    })
   }
 
   if (self.status === 'rejected') {
-    return new myOwnPromise(function(resolve, reject) {})
+    return (promise2 = new myOwnPromise(function(resolve, reject) {
+      try {
+        var x = onRejected(self.data)
+        if (x instanceof myOwnPromise) {
+          x.then(resolve, reject)
+        }
+      } catch (e) {
+        reject(e)
+      }
+    }))
   }
 
   if (self.status === 'pending') {
-    return new myOwnPromise(function(resolve, reject) {})
+    return (promise2 = new Promise(function(resolve, reject) {
+      self.onResolvedCallback.push(function(value) {
+        try {
+          var x = onResolved(self.data)
+          if (x instanceof myOwnPromise) {
+            x.then(resolve, reject)
+          }
+        } catch (e) {
+          reject(e)
+        }
+      })
+
+      self.onRejectedCallback.push(function(reason) {
+        try {
+          var x = onRejected(self.data)
+          if (x instanceof myOwnPromise) {
+            x.then(resolve, reject)
+          }
+        } catch (e) {
+          reject(e)
+        }
+      })
+    }))
   }
+}
+
+myOwnPromise.prototype.catch = function(onRejected) {
+  return this.then(null, onRejected)
 }
 
 module.exports = { myOwnPromise }

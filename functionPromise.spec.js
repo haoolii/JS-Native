@@ -12,15 +12,22 @@ describe('Test Promise Function Block', () => {
     arr_native = null
   })
 
+  var aysncExcept = function(time) {
+    return new Promise((resovle, reject) => {
+      setTimeout(resovle, time)
+    })
+  }
+
   test('Promise resolve then function', () => {
     var _fun = function() {
       return new myOwnPromise((resovle, reject) => {
         arr.push('1')
         setTimeout(() => {
           resovle('2')
-        }, 3000)
+        }, 100)
       })
     }
+
     _fun().then(n => {
       arr.push(n)
       arr.push('3')
@@ -31,7 +38,7 @@ describe('Test Promise Function Block', () => {
         arr_native.push('1')
         setTimeout(() => {
           resovle('2')
-        }, 3000)
+        }, 100)
       })
     }
     _fun_native().then(n => {
@@ -39,8 +46,8 @@ describe('Test Promise Function Block', () => {
       arr_native.push('3')
     })
 
-    setTimeout(() => {
-      expect(arr).toEqual(arr_native)
-    }, 5000);
+    return aysncExcept(500).then(() => {
+      expect(arr).toStrictEqual(arr_native)
+    })
   })
 })
